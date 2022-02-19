@@ -139,16 +139,14 @@ class VAEDataset(LightningDataModule):
 #       =========================  CelebA Dataset  =========================
     
         train_transforms = transforms.Compose([transforms.RandomHorizontalFlip(),
-                                              transforms.CenterCrop(148),
                                               transforms.Resize(self.patch_size),
                                               transforms.ToTensor(),])
         
         val_transforms = transforms.Compose([transforms.RandomHorizontalFlip(),
-                                            transforms.CenterCrop(148),
                                             transforms.Resize(self.patch_size),
                                             transforms.ToTensor(),])
         
-        self.train_dataset =MyCelebA(
+        self.train_dataset = ChestDataset(
             self.data_dir,
             split='train',
             transform=train_transforms,
@@ -156,7 +154,7 @@ class VAEDataset(LightningDataModule):
         )
         
         # Replace CelebA with your dataset
-        self.val_dataset = MyCelebA(
+        self.val_dataset = ChestDataset(
             self.data_dir,
             split='test',
             transform=val_transforms,
