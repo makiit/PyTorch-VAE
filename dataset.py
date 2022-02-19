@@ -2,6 +2,7 @@ import os
 import torch
 from torch import Tensor
 from pathlib import Path
+import numpy as np
 from typing import List, Optional, Sequence, Union, Any, Callable
 from torchvision.datasets.folder import default_loader
 from pytorch_lightning import LightningDataModule
@@ -37,7 +38,7 @@ class ChestDataset(Dataset):
         if self.transforms is not None:
             img = self.transforms(img)
             print(np.shape(img))
-            
+
         
         return img, 0.0
 
