@@ -31,7 +31,7 @@ class ChestDataset(Dataset):
     def __getitem__(self, idx):
         img = default_loader(self.imgs[idx])
         if(idx==1):
-            print(imgs[idx])
+            print(self.imgs[idx])
 
         
         if self.transforms is not None:
