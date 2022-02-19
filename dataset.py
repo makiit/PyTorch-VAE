@@ -148,7 +148,7 @@ class VAEDataset(LightningDataModule):
                                               transforms.ToTensor(),])
         
         val_transforms = transforms.Compose([transforms.RandomHorizontalFlip(),
-                                            transforms.Resize((self.patch_size,self.patch_size))s,
+                                            transforms.Resize((self.patch_size,self.patch_size)),
                                             transforms.ToTensor(),])
         
         self.train_dataset = ChestDataset(
