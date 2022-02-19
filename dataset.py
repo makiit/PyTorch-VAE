@@ -36,6 +36,8 @@ class ChestDataset(Dataset):
         
         if self.transforms is not None:
             img = self.transforms(img)
+            print(np.shape(img))
+            
         
         return img, 0.0
 
