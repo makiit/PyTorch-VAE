@@ -31,13 +31,12 @@ class ChestDataset(Dataset):
     
     def __getitem__(self, idx):
         img = default_loader(self.imgs[idx])
-        if(idx==1):
-            print(self.imgs[idx])
+        # if(idx==1):
+        #     print(self.imgs[idx])
 
         
         if self.transforms is not None:
             img = self.transforms(img)
-            print(np.shape(img))
 
         
         return img, 0.0
@@ -149,7 +148,7 @@ class VAEDataset(LightningDataModule):
                                               transforms.ToTensor(),])
         
         val_transforms = transforms.Compose([transforms.RandomHorizontalFlip(),
-                                            transforms.Resize((self.patch_size,self.patch_size)),
+                                            transforms.Resize((self.patch_size,self.patch_size))s,
                                             transforms.ToTensor(),])
         
         self.train_dataset = ChestDataset(
