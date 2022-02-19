@@ -12,17 +12,29 @@ import zipfile
 
 
 # Add your custom dataset class here
-class MyDataset(Dataset):
-    def __init__(self):
-        pass
-    
+class ChestDataset(Dataset):
+    def __init__(self, 
+                 data_path: str, 
+                 split: str,
+                 transform: Callable,
+                **kwargs):
+        self.train_data_dir = Path(data_path)/"train"
+        self.test_data_dir = Path(data_path)/"test"        
+        self.transforms = transform
+        train_imgs = sorted([f for f in self.train_data_dir.iterdir() if f.suffix == '.jpeg'])
+        test_imgs = sorted([f for f in self.test_data_dir.iterdir() if f.suffix == '.jpeg'])
+        self.imgs = train_imgs if split == "train" else test_imgs
     
     def __len__(self):
-        pass
+        return len(self.imgs)
     
     def __getitem__(self, idx):
-        pass
-
+        img = default_loader(self.imgs[idx])
+        
+        if self.transforms is not None:
+            img = self.transforms(img)
+        
+        return img, 0.0
 
 class MyCelebA(CelebA):
     """
@@ -136,7 +148,7 @@ class VAEDataset(LightningDataModule):
                                             transforms.Resize(self.patch_size),
                                             transforms.ToTensor(),])
         
-        self.train_dataset = MyCelebA(
+        self.train_dataset = ChestDataset(
             self.data_dir,
             split='train',
             transform=train_transforms,
@@ -144,7 +156,7 @@ class VAEDataset(LightningDataModule):
         )
         
         # Replace CelebA with your dataset
-        self.val_dataset = MyCelebA(
+        self.val_dataset = ChestDataset(
             self.data_dir,
             split='test',
             transform=val_transforms,
