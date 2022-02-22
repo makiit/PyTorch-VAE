@@ -47,6 +47,7 @@ def inception_score(imgs, cuda=True, batch_size=32, resize=False, splits=1):
     preds = np.zeros((N, 1000))
 
     for i, batch in enumerate(dataloader, 0):
+        batch = batch[0]
         batch = batch.type(dtype)
         batchv = Variable(batch)
         batch_size_i = batch.size()[0]
@@ -67,29 +68,29 @@ def inception_score(imgs, cuda=True, batch_size=32, resize=False, splits=1):
 
     return np.mean(split_scores), np.std(split_scores)
 
-if __name__ == '__main__':
-    class IgnoreLabelDataset(torch.utils.data.Dataset):
-        def __init__(self, orig):
-            self.orig = orig
+# if __name__ == '__main__':
+#     class IgnoreLabelDataset(torch.utils.data.Dataset):
+#         def __init__(self, orig):
+#             self.orig = orig
 
-        def __getitem__(self, index):
-            return self.orig[index][0]
+#         def __getitem__(self, index):
+#             return self.orig[index][0]
 
-        def __len__(self):
-            return len(self.orig)
+#         def __len__(self):
+#             return len(self.orig)
 
-    import torchvision.datasets as dset
-    import torchvision.transforms as transforms
+#     import torchvision.datasets as dset
+#     import torchvision.transforms as transforms
 
-    cifar = dset.CIFAR10(root='data/', download=True,
-                             transform=transforms.Compose([
-                                 transforms.Scale(32),
-                                 transforms.ToTensor(),
-                                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-                             ])
-    )
+#     cifar = dset.CIFAR10(root='data/', download=True,
+#                              transform=transforms.Compose([
+#                                  transforms.Scale(32),
+#                                  transforms.ToTensor(),
+#                                  transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+#                              ])
+#     )
 
-    IgnoreLabelDataset(cifar)
+#     IgnoreLabelDataset(cifar)
 
-    print ("Calculating Inception Score...")
-    print (inception_score(IgnoreLabelDataset(cifar), cuda=True, batch_size=32, resize=True, splits=10))
+#     print ("Calculating Inception Score...")
+#     print (inception_score(IgnoreLabelDataset(cifar), cuda=True, batch_size=32, resize=True, splits=10))
