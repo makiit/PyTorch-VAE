@@ -235,7 +235,7 @@ def load_images(path):
         final_images: np.array of image dtype and shape.
     """
     image_paths = []
-    image_extensions = ["png", "jpg"]
+    image_extensions = ["png", "jpeg"]
     for ext in image_extensions:
         print("Looking for images in", os.path.join(path, "*.{}".format(ext)))
         for impath in glob.glob(os.path.join(path, "*.{}".format(ext))):
