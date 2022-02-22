@@ -242,6 +242,7 @@ def load_images(path):
             image_paths.append(impath)
     first_image = cv2.imread(image_paths[0])
     W, H = first_image.shape[:2]
+    print(W,H)
     image_paths.sort()
     image_paths = image_paths
     final_images = np.zeros((len(image_paths), H, W, 3), dtype=first_image.dtype)
