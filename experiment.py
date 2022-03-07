@@ -88,6 +88,7 @@ class VAEXperiment(pl.LightningModule):
                               nrow=12)
         except Warning:
             pass
+          
 
     def configure_optimizers(self):
 
